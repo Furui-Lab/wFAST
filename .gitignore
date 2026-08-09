@@ -1,0 +1,79 @@
+# ============================================================
+# wFAST .gitignore
+# ============================================================
+
+# ------------------------------------------------------------
+# Compiled binaries and libraries
+# ------------------------------------------------------------
+*.exe
+*.dll
+*.obj
+*.o
+*.mod
+*.pdb
+*.ilk
+*.exp
+*.lib
+
+# ------------------------------------------------------------
+# Visual Studio / Intel Fortran generated files
+# ------------------------------------------------------------
+.vs/
+Debug/
+Release/
+x64/
+Win32/
+*.user
+*.suo
+*.ncb
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.VC.opendb
+
+# ------------------------------------------------------------
+# GiD / wFAST generated result files
+# ------------------------------------------------------------
+*.post.res
+*.post.msh
+*.log
+*.err
+
+# ------------------------------------------------------------
+# wFAST generated/intermediate files
+# ------------------------------------------------------------
+gid.dat
+wfastinp.dat
+wfastinp.res
+wfast-po_solid.dat
+wfast-po_joint.dat
+wfastinp_point_load.dat
+wfastinp_surface_load.dat
+wfastinp_po_solid.dat
+wfastinp_po_joint.dat
+wfastinp_temperature.dat
+wfastinp_drho.dat
+
+# ------------------------------------------------------------
+# Backup and temporary files
+# ------------------------------------------------------------
+backup/
+*.bak
+*.tmp
+*~
+*.swp
+*.swo
+
+# ------------------------------------------------------------
+# Operating-system generated files
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ------------------------------------------------------------
+# Archives created for local backup/distribution
+# ------------------------------------------------------------
+*.zip
+*.7z
+*.rar
