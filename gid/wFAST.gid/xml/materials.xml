@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><!-- -*- coding: utf-8; mode: SGML -*- -->
+
+<container n="materials" pn="Solid materials" icon="material" help="Materials database">      
+  <blockdata n='material' name='Reservoir' sequence='1' editable_name='unique' icon="material" help='Material definition' morebutton="0">     
+    <value n="Young" pn="Young's Modulus [Pa]" v="6.89e9" help="Young's modulus of bulk rock"/>
+	<value n="Poiss" pn="Poisson's Ratio [-]" v="0.22" help="Poisson's ratio of bulk rock"/>
+	<value n="Density" pn="Density [kg/m3]" v="2650" help="Density of bulk rock"/>
+    <value n="Youngm" pn="Matrix Young's Modulus [Pa]" v="6.76e10" help="Young's modulus of rock matrix"/>
+	<value n="Poissm" pn="Matrix Poisson's Ratio [-]" v="0.20" help="Poisson's ratio of rock matrix"/>
+	<value n="Alpha" pn="Thermal expansion coefficient [1/deg.C]" v="8.0e-6" help="Thermal expansion coefficient of the rock"/>
+	<value n="Friction_umf" pn="Friction coefficient (UMF) [-]" v="0.6" help="Friction coefficient for unmapped faults"/>
+	<value n="Cohesion_umf" pn="Cohesion (UMF) [Pa]" v="0.0" help="Cohesion for unmapped faults"/>
+  </blockdata>
+  <blockdata n='material' name='Overburden' sequence='1' editable_name='unique' icon="material" help='Material definition' morebutton="0">
+    <value n="Young" pn="Young's Modulus [Pa]" v="3.45e9" help="Young's modulus of bulk rock"/>
+	<value n="Poiss" pn="Poisson's Ratio [-]" v="0.19" help="Poisson's ratio of bulk rock"/>
+	<value n="Density" pn="Density [kg/m3]" v="2400" help="Density of bulk rock"/>
+    <value n="Youngm" pn="Matrix Young's Modulus [Pa]" v="6.76e10" help="Young's modulus of rock matrix"/>
+	<value n="Poissm" pn="Matrix Poisson's Ratio [-]" v="0.20" help="Poisson's ratio of rock matrix"/>
+	<value n="Alpha" pn="Thermal expansion coefficient [1/deg.C]" v="8.0e-6" help="Thermal expansion coefficient of the rock"/>
+	<value n="Friction_umf" pn="Friction coefficient (UMF) [-]" v="0.6" help="Friction coefficient for unmapped faults"/>
+	<value n="Cohesion_umf" pn="Cohesion (UMF) [Pa]" v="0.0" help="Cohesion for unmapped faults"/>
+  </blockdata>
+  <blockdata n='material' name='Basement' sequence='1' editable_name='unique' icon="material" help='Material definition' morebutton="0">
+    <value n="Young" pn="Young's Modulus [Pa]" v="4.0e10" help="Young's modulus of bulk rock"/>
+	<value n="Poiss" pn="Poisson's Ratio [-]" v="0.25" help="Poisson's ratio of bulk rock"/>
+	<value n="Density" pn="Density [kg/m3]" v="2750" help="Density of bulk rock"/>
+    <value n="Youngm" pn="Matrix Young's Modulus [Pa]" v="6.76e10" help="Young's modulus of rock matrix"/>
+	<value n="Poissm" pn="Matrix Poisson's Ratio [-]" v="0.20" help="Poisson's ratio of rock matrix"/>
+	<value n="Alpha" pn="Thermal expansion coefficient [1/deg.C]" v="8.0e-6" help="Thermal expansion coefficient of the rock"/>
+	<value n="Friction_umf" pn="Friction coefficient (UMF) [-]" v="0.6" help="Friction coefficient for unmapped faults"/>
+	<value n="Cohesion_umf" pn="Cohesion (UMF) [Pa]" v="0.0" help="Cohesion for unmapped faults"/>
+  </blockdata>
+  <blockdata n='material' name='Caprock' sequence='1' editable_name='unique' icon="material" help='Material definition' morebutton="0">
+    <value n="Young" pn="Young's Modulus [Pa]" v="2.0e9" help="Young's modulus of bulk rock"/>
+	<value n="Poiss" pn="Poisson's Ratio [-]" v="0.25" help="Poisson's ratio of bulk rock"/>
+	<value n="Density" pn="Density [kg/m3]" v="2750" help="Density of bulk rock"/>
+    <value n="Youngm" pn="Matrix Young's Modulus [Pa]" v="6.76e10" help="Young's modulus of rock matrix"/>
+	<value n="Poissm" pn="Matrix Poisson's Ratio [-]" v="0.20" help="Poisson's ratio of rock matrix"/>
+	<value n="Alpha" pn="Thermal expansion coefficient [1/deg.C]" v="8.0e-6" help="Thermal expansion coefficient of the rock"/>
+	<value n="Friction_umf" pn="Friction coefficient (UMF) [-]" v="0.6" help="Friction coefficient for unmapped faults"/>
+	<value n="Cohesion_umf" pn="Cohesion (UMF) [Pa]" v="0.0" help="Cohesion for unmapped faults"/>
+  </blockdata>
+</container> 
+

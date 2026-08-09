@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?><!-- -*- coding: utf-8; mode: SGML -*- -->
+
+<wFAST_data version='1.0'>
+  <style show_menubutton_about='0' show_menubutton_search='1'>
+  </style>
+  <display_options frame_width="151" is_frame_open="1"/>
+  <!-- units -->
+  <units>  
+    <!--by now it is compulsory define this node if units are used (could be empty if defaults are enough)-->
+  </units>
+  
+  <container n="general" pn="General Information" icon="general">
+    <value n='gen_steps' pn='# of load steps' v="1" help="Number of load steps."/>
+    <value n='gen_conv' pn='Convergence limit' v="1.0e-6" help="Convergence criterion for nonlinear calculations."/>
+	<value n='max_iter' pn='Max # of iterations' v="99" help="Maximum number of iterations."/>
+	<value n='gauss_solid' pn='# of gauss points for volume integration' v="8" help="Integration points for gauss quadrature (solid elements)"/>
+	<value n='gauss_joint' pn='# of gauss points for surface integration' v="4" help="Integration points for gauss quadrature (joint elements)"/>
+	<value n='str_points_solid' pn='# of stress points per solid element' v="1" help="# of stress evaluation points for solid elements."/>
+	<value n='str_points_joint' pn='# of stress points per joint element' v="1" help="# of stress evaluation points for joint elements."/>
+    <value n='stress_gradient' pn='Enter stress values as gradients' v="0" help="Set 1 if stresses are assigned by gradients."/>
+	<value n='pore_pressure_gradient' pn='Enter pore pressures as gradients' v="0" help="Set 1 if pore pressures are assigned by gradients."/>
+	<value n='temperature_gradient' pn='Enter temperatures as gradients' v="0" help="Set 1 if temperatures are assigned by gradients."/>
+	<value n='g_acceleration' pn='Gravitational acceleration [m/s2]' v="9.80665" help="Standard gravitational acceleration."/>
+  </container>
+
+<!-- solid properties -->
+  <container n="Properties_solid" pn="Solid Properties" icon="material" help="Define your materials database and apply them to the volumes of your problem">
+    <condition n="Solids" pn="Solids" ov="volume" ovm="element" ov_element_types="tetrahedra,hexahedra" icon="material1" groups_icon="material1" help="Select a solid material and assign it to volumes.">
+      <value n="material" pn="Solid material" editable='0' help="Choose a material from the database" values='[Cmas2d::GetMaterialsList %W]' v="Reservoir">
+	<edit_command n="Edit materials" pn="Edit materials" icon="material2.png" proc='Cmas2d::EditDatabaseListDirect %W %DICT %BC'/>
+      </value>
+    </condition>
+    <include path="xml/materials.xml"/>
+  </container>
+  
+ <!-- joint properties -->
+  <container n="Properties_joint" pn="Joint Properties" icon="material" help="Define joint properties and assign them to surfaces.">
+    <condition n="Joints" pn="Joints" ov="surface" ovm="element" ov_element_types="triangle,quadrilateral" icon="material1" groups_icon="material1" help="Select a joint material and assign it to surfaces">
+      <value n="material" pn="Joint material" editable='0' help="Choose a material from the database" values='[Cmas2d::GetMaterialsListJoint %W]' v="Joint1">
+	<edit_command n="Edit materials" pn="Edit materials" icon="material2.png" proc='Cmas2d::EditDatabaseListDirectJoint %W %DICT %BC'/>
+      </value>
+    </condition>
+    <include path="xml/materials_joint.xml"/>
+  </container>
+  
+  <!-- INITIAL CONDITIONS -->
+  <container n="Initial_Conditions" pn="Initial Conditions" icon="initial" help="Initial stress and pore pressure data for solid and joint elements.">
+    <!-- Initial stresses -->
+    <condition n="Ini_Stress" pn="Initial Stress for Solid" ov="volume" ovm="" icon="initial" groups_icon="initial" help="Initial stress for solid elements">
+      <value n="sigma_x" pn="Sigma_x [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="sigma_y" pn="Sigma_y [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="sigma_z" pn="Sigma_z [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="tau_xy" pn="Tau_xy [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="tau_yz" pn="Tau_yz [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="tau_zx" pn="Tau_zx [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_sigma_x" pn="Grad_sigma_x [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_x*Depth+Sigma_x"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_sigma_y" pn="Grad_sigma_y [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_y*Depth+Sigma_y"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_sigma_z" pn="Grad_sigma_z [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_z*Depth+Sigma_z"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_tau_xy" pn="Grad_tau_xy [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_xy*Depth+Tau_xy"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_tau_yz" pn="Grad_tau_yz [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_yz*Depth+Tau_yz"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_tau_zx" pn="Grad_tau_zx [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_zx*Depth+Tau_zx"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  
+    <!-- Initial pore pressure -->
+    <condition n="Ini_Porepressure" pn="Initial Pore Pressure for Solid" ov="volume" ovm="" icon="initial" groups_icon="initial" help="Initial pore pressure for solid elements">
+      <value n="po1" pn="Po (for solid element) [Pa]" v="0.0" help="Initial pore pressure."/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_po1" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  
+    <!-- Initial temperature -->
+    <condition n="Ini_Temperature" pn="Initial Temperature for Solid" ov="volume" ovm="" icon="initial" groups_icon="initial" help="Initial temperature for solid elements">
+      <value n="temp1" pn="Temp (for solid element) [deg.C]" v="0.0" help="Initial Temperature."/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_temp1" pn="Grad_temp [deg.C/m]" v="0.0" help="Temperature is calculated by Grad_temp*Depth+temp"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>  
+  
+  <!-- Initial stresses for joint elements -->
+    <condition n="Ini_Stress_Joint" pn="Initial Stress for Joints" ov="surface" ovm="" icon="initial" groups_icon="initial" help="Initial stress for joint elements">
+      <value n="sigma_x" pn="Sigma_x [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="sigma_y" pn="Sigma_y [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="sigma_z" pn="Sigma_z [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="tau_xy" pn="Tau_xy [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="tau_yz" pn="Tau_yz [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="tau_zx" pn="Tau_zx [Pa]" v="0.0" help="Initial stress"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  	  <value n="grad_sigma_x" pn="Grad_sigma_x [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_x*Depth+Sigma_x"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_sigma_y" pn="Grad_sigma_y [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_y*Depth+Sigma_y"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_sigma_z" pn="Grad_sigma_z [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_z*Depth+Sigma_z"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_tau_xy" pn="Grad_tau_xy [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_xy*Depth+Tau_xy"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_tau_yz" pn="Grad_tau_yz [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_yz*Depth+Tau_yz"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_tau_zx" pn="Grad_tau_zx [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_zx*Depth+Tau_zx"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  
+    <!-- Initial pore pressure for joint elements -->
+    <condition n="Ini_Porepressure_Joint" pn="Initial Pore Pressure for Joints" ov="surface" ovm="" icon="initial" groups_icon="initial" help="Initial pore pressure for joint elements">
+      <value n="po1" pn="Po (for joint element) [Pa]" v="0.0" help="Fluid pressure inside the joint."/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_po1" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  </container>
+  
+  <!-- LOADING CONDITIONS -->
+  <container n="LOADING_Conditions" pn="Loading Conditions" icon="loading" help="Boundary conditions and loading or field changes applied during the analysis."> 
+
+<!-- displacement boundary conditions -->
+  <condition n="Disp_Bc" pn="Displacement boundary conditions" ov="surface" ovm="" icon="loading" groups_icon="loading" help="Specify the fixed boundary conditions you want to apply.">
+    <value n="Iffix_x" pn="Fix x-displacement" v="0" help="0 = fixed, 1 = free."/>  
+    <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	<value n="Iffix_y" pn="Fix y-displacement" v="0" help="0 = fixed, 1 = free."/>  
+    <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	<value n="Iffix_z" pn="Fix z-displacement" v="0" help="0 = fixed, 1 = free."/>  
+    <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	<value n="ux" pn="Fixed Ux value [m]" v="0.000" help="x-displacement assigned to the surface"/>  
+    <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	<value n="uy" pn="Fixed Uy value [m]" v="0.000" help="y-displacement assigned to the surface."/>  
+    <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	<value n="uz" pn="Fixed Uz value [m]" v="0.000" help="z-displacement assigned to the surface."/>  
+    <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+  </condition>
+
+    <!-- Traction boundary conditions -->
+  <condition n="Trac_Bc" pn="Traction boundary conditions" ov="surface" ovm="face_element" icon="loading" groups_icon="loading" help="Surface loading">
+    <value n="Ts1" pn="Shear Traction in s1 direction [Pa]" v="0.0" help="s1 direction is parallel to the element surface."/>  
+    <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	<value n="Ts2" pn="Shear Traction in s2 direction [Pa]" v="0.0" help="s2 direction is parallel to the element surface."/>  
+    <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	<value n="Tn" pn="Normal Traction [Pa]" v="0.0" help="n direction is normal to the element surface."/>  
+    <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+  </condition>
+	
+	<!-- Pore pressure -->
+     <condition n="Porepressure" pn="Pore Pressure for Solid" ov="volume" ovm="" icon="loading" groups_icon="loading" help="Pore pressures for solid elements">
+      <value n="po2" pn="Po (for solid element) [Pa]" v="0.0" help="pore pressure for solid elements."/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_po2" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  
+    <!-- Temperature -->
+     <condition n="Temperature" pn="Temperature for Solid" ov="volume" ovm="" icon="loading" groups_icon="loading" help="Temperature for solid elements">
+      <value n="temp2" pn="Temp (for solid element) [deg.C]" v="0.0" help="Temperature for solid elements."/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_temp2" pn="Grad_Temp [deg.C/m]" v="0.0" help="Temperature is calculated by Grad_temp*Depth+temp"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  
+    <!-- Density changes -->
+     <condition n="Density_change" pn="Density change for Solid" ov="volume" ovm="" icon="loading" groups_icon="loading" help="Density change for solid elements">
+      <value n="drho" pn="Change in rock density (for solid element) [kg/m3]" v="0.0" help="Density change for solid elements."/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  
+      <!-- Initial pore pressure for joint elements -->
+    <condition n="Porepressure_Joint" pn="Pore Pressure for Joint" ov="surface" ovm="" icon="loading" groups_icon="loading" help="Pore pressure for joint elements">
+      <value n="po2" pn="Po (for joint element) [Pa]" v="0.0" help="fluid pressure for joint elements."/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+	  <value n="grad_po2" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>  
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  </container>  
+</wFAST_data>
