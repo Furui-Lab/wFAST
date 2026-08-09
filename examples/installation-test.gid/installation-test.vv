@@ -1,0 +1,33 @@
+BeginZE
+   x -67.5544052124023438 167.554412841796875
+   y 172.4744873046875 -72.4744873046875
+   z -267.4234619140625 467.4234619140625
+   e 122.4744873046875
+   v 0 0 0
+   r 0
+   m 0.985397160053253174 0.0518638826906681061 -0.162180796265602112 0 -0.16868378221988678 0.427127838134765625 -0.888317286968231201 0 0.0232003498822450638 0.902702569961547852 0.429639160633087158 0 0 0 0 1
+   c 50 50 -100
+   pd 0
+   pno 0
+   pfo 0
+   pf 4
+   pv 0
+   NowUse 1
+   DrawingType 0
+   LightVector 90 90 150 0
+   OGLShadow(UseShadows) 0
+   OGLShadow(RenderMode) RenderNice
+   OGLShadow(ShadowBias) -0.002
+   OGLShadow(AmbientShadows) 1
+   OGLShadow(UseFBO) 1
+   OGLShadow(FBOSize) 2048
+   OGLShadow(DimmedLightFactor) 0.02
+   OGLStereo(UseStereo) 0
+   OGLStereo(RelativeEyeDistance) 1
+   OGLStereo(FlipEyes) 0
+   OGLStereo(StereoMode) AnaglyphColors
+   OGLStereo(EyeDistance) 0.075
+   OGLStereo(LeftEyeDistance) 1 0 0 1
+   OGLStereo(RightEyeDistance) 0 1 1 1
+EndZE
+

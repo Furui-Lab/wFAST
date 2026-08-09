@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?><!-- -*- coding: utf-8; mode: SGML -*- -->
+<wFAST_data version="1.0">
+  <style show_menubutton_about="0" show_menubutton_search="1"/>
+  <!-- units -->
+  <units>
+    <!--by now it is compulsory define this node if units are used (could be empty if defaults are enough)-->
+  </units>
+  <container n="general" pn="General Information" icon="general" tree_state="close">
+    <value n="gen_steps" pn="# of load steps" v="1" help="Number of load steps." tree_state="close"/>
+    <value n="gen_conv" pn="Convergence limit" v="1.0e-6" help="Convergence criterion for nonlinear calculations." tree_state="close"/>
+    <value n="max_iter" pn="Max # of iterations" v="99" help="Maximum number of iterations." tree_state="close"/>
+    <value n="gauss_solid" pn="# of gauss points for volume integration" v="8" help="Integration points for gauss quadrature (solid elements)" tree_state="close"/>
+    <value n="gauss_joint" pn="# of gauss points for surface integration" v="4" help="Integration points for gauss quadrature (joint elements)" tree_state="close"/>
+    <value n="str_points_solid" pn="# of stress points per solid element" v="1" help="# of stress evaluation points for solid elements." tree_state="close"/>
+    <value n="str_points_joint" pn="# of stress points per joint element" v="1" help="# of stress evaluation points for joint elements." tree_state="close"/>
+    <value n="stress_gradient" pn="Enter stress values as gradients" v="0" help="Set 1 if stresses are assigned by gradients." tree_state="close"/>
+    <value n="pore_pressure_gradient" pn="Enter pore pressures as gradients" v="0" help="Set 1 if pore pressures are assigned by gradients." tree_state="close"/>
+    <value n="temperature_gradient" pn="Enter temperatures as gradients" v="0" help="Set 1 if temperatures are assigned by gradients." tree_state="close"/>
+    <value n="g_acceleration" pn="Gravitational acceleration [m/s2]" v="9.80665" help="Standard gravitational acceleration." tree_state="close"/>
+  </container>
+  <!-- solid properties -->
+  <container n="Properties_solid" pn="Solid Properties" icon="material" help="Define your materials database and apply them to the volumes of your problem" tree_state="open">
+    <condition n="Solids" pn="Solids" ov="volume" ovm="element" ov_element_types="tetrahedra,hexahedra" icon="material1" groups_icon="material1" help="Select a solid material and assign it to volumes." tree_state="open">
+      <value n="material" pn="Solid material" editable="0" help="Choose a material from the database" values="[Cmas2d::GetMaterialsList %W]" v="Reservoir" state="">
+        <edit_command n="Edit materials" pn="Edit materials" icon="material2.png" proc="Cmas2d::EditDatabaseListDirect %W %DICT %BC"/>
+      </value>
+      <group n="Solids Auto1" ov="volume" tree_state="close">
+        <value n="material" pn="Solid material" editable="0" help="Choose a material from the database" values="[Cmas2d::GetMaterialsList %W]" state="normal" v="Reservoir" tree_state="close"/>
+      </group>
+    </condition>
+    <container n="materials" pn="Solid materials" icon="material" help="Materials database" tree_state="close">
+      <blockdata n="material" name="Reservoir" sequence="1" editable_name="unique" icon="material" help="Material definition" morebutton="0">
+        <value n="Young" pn="Young's Modulus [Pa]" v="6.89e9" help="Young's modulus of bulk rock"/>
+        <value n="Poiss" pn="Poisson's Ratio [-]" v="0.22" help="Poisson's ratio of bulk rock"/>
+        <value n="Density" pn="Density [kg/m3]" v="2650" help="Density of bulk rock"/>
+        <value n="Youngm" pn="Matrix Young's Modulus [Pa]" v="6.76e10" help="Young's modulus of rock matrix"/>
+        <value n="Poissm" pn="Matrix Poisson's Ratio [-]" v="0.20" help="Poisson's ratio of rock matrix"/>
+        <value n="Alpha" pn="Thermal expansion coefficient [1/deg.C]" v="8.0e-6" help="Thermal expansion coefficient of the rock"/>
+        <value n="Friction_umf" pn="Friction coefficient (UMF) [-]" v="0.6" help="Friction coefficient for unmapped faults"/>
+        <value n="Cohesion_umf" pn="Cohesion (UMF) [Pa]" v="0.0" help="Cohesion for unmapped faults"/>
+      </blockdata>
+      <blockdata n="material" name="Overburden" sequence="1" editable_name="unique" icon="material" help="Material definition" morebutton="0">
+        <value n="Young" pn="Young's Modulus [Pa]" v="3.45e9" help="Young's modulus of bulk rock"/>
+        <value n="Poiss" pn="Poisson's Ratio [-]" v="0.19" help="Poisson's ratio of bulk rock"/>
+        <value n="Density" pn="Density [kg/m3]" v="2400" help="Density of bulk rock"/>
+        <value n="Youngm" pn="Matrix Young's Modulus [Pa]" v="6.76e10" help="Young's modulus of rock matrix"/>
+        <value n="Poissm" pn="Matrix Poisson's Ratio [-]" v="0.20" help="Poisson's ratio of rock matrix"/>
+        <value n="Alpha" pn="Thermal expansion coefficient [1/deg.C]" v="8.0e-6" help="Thermal expansion coefficient of the rock"/>
+        <value n="Friction_umf" pn="Friction coefficient (UMF) [-]" v="0.6" help="Friction coefficient for unmapped faults"/>
+        <value n="Cohesion_umf" pn="Cohesion (UMF) [Pa]" v="0.0" help="Cohesion for unmapped faults"/>
+      </blockdata>
+      <blockdata n="material" name="Basement" sequence="1" editable_name="unique" icon="material" help="Material definition" morebutton="0">
+        <value n="Young" pn="Young's Modulus [Pa]" v="4.0e10" help="Young's modulus of bulk rock"/>
+        <value n="Poiss" pn="Poisson's Ratio [-]" v="0.25" help="Poisson's ratio of bulk rock"/>
+        <value n="Density" pn="Density [kg/m3]" v="2750" help="Density of bulk rock"/>
+        <value n="Youngm" pn="Matrix Young's Modulus [Pa]" v="6.76e10" help="Young's modulus of rock matrix"/>
+        <value n="Poissm" pn="Matrix Poisson's Ratio [-]" v="0.20" help="Poisson's ratio of rock matrix"/>
+        <value n="Alpha" pn="Thermal expansion coefficient [1/deg.C]" v="8.0e-6" help="Thermal expansion coefficient of the rock"/>
+        <value n="Friction_umf" pn="Friction coefficient (UMF) [-]" v="0.6" help="Friction coefficient for unmapped faults"/>
+        <value n="Cohesion_umf" pn="Cohesion (UMF) [Pa]" v="0.0" help="Cohesion for unmapped faults"/>
+      </blockdata>
+      <blockdata n="material" name="Caprock" sequence="1" editable_name="unique" icon="material" help="Material definition" morebutton="0">
+        <value n="Young" pn="Young's Modulus [Pa]" v="2.0e9" help="Young's modulus of bulk rock"/>
+        <value n="Poiss" pn="Poisson's Ratio [-]" v="0.25" help="Poisson's ratio of bulk rock"/>
+        <value n="Density" pn="Density [kg/m3]" v="2750" help="Density of bulk rock"/>
+        <value n="Youngm" pn="Matrix Young's Modulus [Pa]" v="6.76e10" help="Young's modulus of rock matrix"/>
+        <value n="Poissm" pn="Matrix Poisson's Ratio [-]" v="0.20" help="Poisson's ratio of rock matrix"/>
+        <value n="Alpha" pn="Thermal expansion coefficient [1/deg.C]" v="8.0e-6" help="Thermal expansion coefficient of the rock"/>
+        <value n="Friction_umf" pn="Friction coefficient (UMF) [-]" v="0.6" help="Friction coefficient for unmapped faults"/>
+        <value n="Cohesion_umf" pn="Cohesion (UMF) [Pa]" v="0.0" help="Cohesion for unmapped faults"/>
+      </blockdata>
+    </container>
+  </container>
+  <!-- joint properties -->
+  <container n="Properties_joint" pn="Joint Properties" icon="material" help="Define joint properties and assign them to surfaces." tree_state="close">
+    <condition n="Joints" pn="Joints" ov="surface" ovm="element" ov_element_types="triangle,quadrilateral" icon="material1" groups_icon="material1" help="Select a joint material and assign it to surfaces">
+      <value n="material" pn="Joint material" editable="0" help="Choose a material from the database" values="[Cmas2d::GetMaterialsListJoint %W]" v="Joint1">
+        <edit_command n="Edit materials" pn="Edit materials" icon="material2.png" proc="Cmas2d::EditDatabaseListDirectJoint %W %DICT %BC"/>
+      </value>
+    </condition>
+    <container n="materials_joint" pn="Joint Materials" icon="material" help="Joint property database">
+      <blockdata n="material" name="Joint1" sequence="1" editable_name="unique" icon="material" help="Material definition" morebutton="0">
+        <value n="ks1" pn="ks1 [Pa/m]" v="1.45e10" help="Joint Stiffness (Shear 1)"/>
+        <value n="ks2" pn="ks2 [Pa/m]" v="1.45e10" help="Joint Stiffness (Shear 2)"/>
+        <value n="kn" pn="kn [Pa/m]" v="1.45e10" help="Joint Stiffness (Normal)"/>
+        <value n="gs" pn="gs [-]" v="1.0" help="viscoplastic algorithm parameter (default)"/>
+        <value n="gn" pn="gn [-]" v="1.0" help="viscoplastic algorithm parameter (default)"/>
+        <value n="multksn" pn="Post-failure stiffness multiplier [-]" v="1.e-20" help="Stiffness reduction factor after joint failure"/>
+        <value n="tensile_strength" pn="Tensile strength [Pa]" v="0.0" help="Tensile strength of joint"/>
+        <value n="friction" pn="Friction coefficient [-]" v="0.5" help="Static friction coefficient for joint"/>
+        <value n="cohesion" pn="Cohesion [Pa]" v="0.0" help="Shear strength of joint"/>
+        <value n="dsc" pn="Threshold stress change [Pa]" v="1.0e4" help="Small stress increment for critically stressed faults to slip"/>
+        <value n="dfriction" pn="Dynamic friction coefficient [-]" v="0.5" help="Friction coefficient after joint failure"/>
+        <value n="dcrit" pn="Critical slip-weakening distance [m]" v="0.1" help="Slip distance required for frictional resistance to drop from peak static strength to the dynamic level."/>
+        <value n="shear_modulus" pn="Shear modulus for M0 calculation [Pa]" v="30e9" help="Shear modulus of the surrounding rocks involved in seismicity event"/>
+      </blockdata>
+      <blockdata n="material" name="Joint2" sequence="1" editable_name="unique" icon="material" help="Material definition" morebutton="0">
+        <value n="ks1" pn="ks1 [Pa/m]" v="1.45e10" help="Joint Stiffness (Shear 1)"/>
+        <value n="ks2" pn="ks2 [Pa/m]" v="1.45e10" help="Joint Stiffness (Shear 2)"/>
+        <value n="kn" pn="kn [Pa/m]" v="1.45e10" help="Joint Stiffness (Normal)"/>
+        <value n="gs" pn="gs [-]" v="1.0" help="viscoplastic algorithm parameter (default)"/>
+        <value n="gn" pn="gn [-]" v="1.0" help="viscoplastic algorithm parameter (default)"/>
+        <value n="multksn" pn="Post-failure stiffness multiplier [-]" v="1.e-20" help="Stiffness reduction factor after joint failure"/>
+        <value n="tensile_strength" pn="Tensile strength [Pa]" v="0.0" help="Tensile strength of joint"/>
+        <value n="friction" pn="Friction coefficient [-]" v="0.5" help="Friction coefficient for joint"/>
+        <value n="cohesion" pn="Cohesion [Pa]" v="0.0" help="Shear strength of joint"/>
+        <value n="dsc" pn="Threshold stress change [Pa]" v="1.0e4" help="Small stress increment for critically stressed faults to slip"/>
+        <value n="dfriction" pn="Dynamic friction coefficient [-]" v="0.5" help="Friction coefficient after joint failure"/>
+        <value n="dcrit" pn="Critical slip-weakening distance [m]" v="0.1" help="Slip distance required for frictional resistance to drop from peak static strength to the dynamic level."/>
+        <value n="shear_modulus" pn="Shear modulus for M0 calculation [Pa]" v="30e9" help="Shear modulus of the surrounding rocks involved in seismicity event"/>
+      </blockdata>
+      <blockdata n="material" name="Joint3" sequence="1" editable_name="unique" icon="material" help="Material definition" morebutton="0">
+        <value n="ks1" pn="ks1 [Pa/m]" v="1.45e10" help="Joint Stiffness (Shear 1)"/>
+        <value n="ks2" pn="ks2 [Pa/m]" v="1.45e10" help="Joint Stiffness (Shear 2)"/>
+        <value n="kn" pn="kn [Pa/m]" v="1.45e10" help="Joint Stiffness (Normal)"/>
+        <value n="gs" pn="gs [-]" v="1.0" help="viscoplastic algorithm parameter (default)"/>
+        <value n="gn" pn="gn [-]" v="1.0" help="viscoplastic algorithm parameter (default)"/>
+        <value n="multksn" pn="Post-failure stiffness multiplier [-]" v="1.e-20" help="Stiffness reduction factor after joint failure"/>
+        <value n="tensile_strength" pn="Tensile strength [Pa]" v="0.0" help="Tensile strength of joint"/>
+        <value n="friction" pn="Friction coefficient [-]" v="0.5" help="Friction coefficient for joint"/>
+        <value n="cohesion" pn="Cohesion [Pa]" v="0.0" help="Shear strength of joint"/>
+        <value n="dsc" pn="Threshold stress change [Pa]" v="1.0e4" help="Small stress increment for critically stressed faults to slip"/>
+        <value n="dfriction" pn="Dynamic friction coefficient [-]" v="0.5" help="Friction coefficient after joint failure"/>
+        <value n="dcrit" pn="Critical slip-weakening distance [m]" v="0.1" help="Slip distance required for frictional resistance to drop from peak static strength to the dynamic level."/>
+        <value n="shear_modulus" pn="Shear modulus for M0 calculation [Pa]" v="30e9" help="Shear modulus of the surrounding rocks involved in seismicity event"/>
+      </blockdata>
+    </container>
+  </container>
+  <!-- INITIAL CONDITIONS -->
+  <container n="Initial_Conditions" pn="Initial Conditions" icon="initial" help="Initial stress and pore pressure data for solid and joint elements." tree_state="close">
+    <!-- Initial stresses -->
+    <condition n="Ini_Stress" pn="Initial Stress for Solid" ov="volume" ovm="" icon="initial" groups_icon="initial" help="Initial stress for solid elements">
+      <value n="sigma_x" pn="Sigma_x [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="sigma_y" pn="Sigma_y [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="sigma_z" pn="Sigma_z [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="tau_xy" pn="Tau_xy [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="tau_yz" pn="Tau_yz [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="tau_zx" pn="Tau_zx [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_sigma_x" pn="Grad_sigma_x [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_x*Depth+Sigma_x"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_sigma_y" pn="Grad_sigma_y [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_y*Depth+Sigma_y"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_sigma_z" pn="Grad_sigma_z [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_z*Depth+Sigma_z"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_tau_xy" pn="Grad_tau_xy [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_xy*Depth+Tau_xy"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_tau_yz" pn="Grad_tau_yz [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_yz*Depth+Tau_yz"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_tau_zx" pn="Grad_tau_zx [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_zx*Depth+Tau_zx"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+    <!-- Initial pore pressure -->
+    <condition n="Ini_Porepressure" pn="Initial Pore Pressure for Solid" ov="volume" ovm="" icon="initial" groups_icon="initial" help="Initial pore pressure for solid elements">
+      <value n="po1" pn="Po (for solid element) [Pa]" v="0.0" help="Initial pore pressure."/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_po1" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+    <!-- Initial temperature -->
+    <condition n="Ini_Temperature" pn="Initial Temperature for Solid" ov="volume" ovm="" icon="initial" groups_icon="initial" help="Initial temperature for solid elements">
+      <value n="temp1" pn="Temp (for solid element) [deg.C]" v="0.0" help="Initial Temperature."/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_temp1" pn="Grad_temp [deg.C/m]" v="0.0" help="Temperature is calculated by Grad_temp*Depth+temp"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+    <!-- Initial stresses for joint elements -->
+    <condition n="Ini_Stress_Joint" pn="Initial Stress for Joints" ov="surface" ovm="" icon="initial" groups_icon="initial" help="Initial stress for joint elements">
+      <value n="sigma_x" pn="Sigma_x [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="sigma_y" pn="Sigma_y [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="sigma_z" pn="Sigma_z [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="tau_xy" pn="Tau_xy [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="tau_yz" pn="Tau_yz [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="tau_zx" pn="Tau_zx [Pa]" v="0.0" help="Initial stress"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_sigma_x" pn="Grad_sigma_x [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_x*Depth+Sigma_x"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_sigma_y" pn="Grad_sigma_y [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_y*Depth+Sigma_y"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_sigma_z" pn="Grad_sigma_z [Pa/m]" v="0.0" help="Stress is calculated by Grad_Sigma_z*Depth+Sigma_z"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_tau_xy" pn="Grad_tau_xy [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_xy*Depth+Tau_xy"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_tau_yz" pn="Grad_tau_yz [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_yz*Depth+Tau_yz"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_tau_zx" pn="Grad_tau_zx [Pa/m]" v="0.0" help="Stress is calculated by Grad_Tau_zx*Depth+Tau_zx"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+    <!-- Initial pore pressure for joint elements -->
+    <condition n="Ini_Porepressure_Joint" pn="Initial Pore Pressure for Joints" ov="surface" ovm="" icon="initial" groups_icon="initial" help="Initial pore pressure for joint elements">
+      <value n="po1" pn="Po (for joint element) [Pa]" v="0.0" help="Fluid pressure inside the joint."/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_po1" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  </container>
+  <!-- LOADING CONDITIONS -->
+  <container n="LOADING_Conditions" pn="Loading Conditions" icon="loading" help="Boundary conditions and loading or field changes applied during the analysis." tree_state="open">
+    <!-- displacement boundary conditions -->
+    <condition n="Disp_Bc" pn="Displacement boundary conditions" ov="surface" ovm="" icon="loading" groups_icon="loading" help="Specify the fixed boundary conditions you want to apply." tree_state="open">
+      <value n="Iffix_x" pn="Fix x-displacement" v="0" help="0 = fixed, 1 = free." state=""/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="Iffix_y" pn="Fix y-displacement" v="0" help="0 = fixed, 1 = free." state=""/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="Iffix_z" pn="Fix z-displacement" v="0" help="0 = fixed, 1 = free." state=""/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="ux" pn="Fixed Ux value [m]" v="0.000" help="x-displacement assigned to the surface" state=""/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="uy" pn="Fixed Uy value [m]" v="0.000" help="y-displacement assigned to the surface." state=""/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="uz" pn="Fixed Uz value [m]" v="0.000" help="z-displacement assigned to the surface." state=""/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <group n="Displacement boundary conditions Auto1" ov="surface" tree_state="close">
+        <value n="Iffix_x" pn="Fix x-displacement" help="0 = fixed, 1 = free." state="normal" v="0" tree_state="close"/>
+        <value n="Iffix_y" pn="Fix y-displacement" help="0 = fixed, 1 = free." state="normal" v="0" tree_state="close"/>
+        <value n="Iffix_z" pn="Fix z-displacement" help="0 = fixed, 1 = free." state="normal" v="0" tree_state="close"/>
+        <value n="ux" pn="Fixed Ux value [m]" help="x-displacement assigned to the surface" state="normal" v="0.000" tree_state="close"/>
+        <value n="uy" pn="Fixed Uy value [m]" help="y-displacement assigned to the surface." state="normal" v="0.000" tree_state="close"/>
+        <value n="uz" pn="Fixed Uz value [m]" help="z-displacement assigned to the surface." state="normal" v="0.000" tree_state="close"/>
+      </group>
+    </condition>
+    <!-- Traction boundary conditions -->
+    <condition n="Trac_Bc" pn="Traction boundary conditions" ov="surface" ovm="face_element" icon="loading" groups_icon="loading" help="Surface loading" tree_state="active,open,selected">
+      <value n="Ts1" pn="Shear Traction in s1 direction [Pa]" v="0.0" help="s1 direction is parallel to the element surface." state=""/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="Ts2" pn="Shear Traction in s2 direction [Pa]" v="0.0" help="s2 direction is parallel to the element surface." state=""/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="Tn" pn="Normal Traction [Pa]" v="0.0" help="n direction is normal to the element surface." state=""/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <group n="Traction boundary conditions Auto1" ov="surface" tree_state="close">
+        <value n="Ts1" pn="Shear Traction in s1 direction [Pa]" help="s1 direction is parallel to the element surface." state="normal" v="0.0" tree_state="close"/>
+        <value n="Ts2" pn="Shear Traction in s2 direction [Pa]" help="s2 direction is parallel to the element surface." state="normal" v="0.0" tree_state="close"/>
+        <value n="Tn" pn="Normal Traction [Pa]" help="n direction is normal to the element surface." state="normal" v="-1e6" tree_state="close"/>
+      </group>
+    </condition>
+    <!-- Pore pressure -->
+    <condition n="Porepressure" pn="Pore Pressure for Solid" ov="volume" ovm="" icon="loading" groups_icon="loading" help="Pore pressures for solid elements" tree_state="close">
+      <value n="po2" pn="Po (for solid element) [Pa]" v="0.0" help="pore pressure for solid elements."/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_po2" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+    <!-- Temperature -->
+    <condition n="Temperature" pn="Temperature for Solid" ov="volume" ovm="" icon="loading" groups_icon="loading" help="Temperature for solid elements" tree_state="close">
+      <value n="temp2" pn="Temp (for solid element) [deg.C]" v="0.0" help="Temperature for solid elements."/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_temp2" pn="Grad_Temp [deg.C/m]" v="0.0" help="Temperature is calculated by Grad_temp*Depth+temp"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+    <!-- Density changes -->
+    <condition n="Density_change" pn="Density change for Solid" ov="volume" ovm="" icon="loading" groups_icon="loading" help="Density change for solid elements" tree_state="close">
+      <value n="drho" pn="Change in rock density (for solid element) [kg/m3]" v="0.0" help="Density change for solid elements."/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+    <!-- Initial pore pressure for joint elements -->
+    <condition n="Porepressure_Joint" pn="Pore Pressure for Joint" ov="surface" ovm="" icon="loading" groups_icon="loading" help="Pore pressure for joint elements" tree_state="close">
+      <value n="po2" pn="Po (for joint element) [Pa]" v="0.0" help="fluid pressure for joint elements."/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+      <value n="grad_po2" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>
+      <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
+    </condition>
+  </container>
+  <display_options frame_width="357" is_frame_open="1" view_conditions_search="0" conditions_search_values=""/>
+  <global_preferences>
+    <units/>
+    <tree_preferences/>
+  </global_preferences>
+  <blockdata n="Internal data">
+    <value n="spd_file" v="C:/Users/301678/Desktop/installation-test.gid/installation-test.spd"/>
+  </blockdata>
+  <groups>
+    <group n="Solids Auto1" onoff="1" color="magenta" type=""/>
+    <group n="Displacement boundary conditions Auto1" onoff="1" color="green" type=""/>
+    <group n="Traction boundary conditions Auto1" onoff="1" color="yellow" type=""/>
+  </groups>
+</wFAST_data>
+
