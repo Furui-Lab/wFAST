@@ -179,22 +179,24 @@ proc Cmas2d::WriteCalculationFile { filename } {
     set condition_formats_stress1_joint [list {"%1d" "element" "id"} {"%13.5e" "property" "sigma_x"} {"%13.5e" "property" "sigma_y"} {"%13.5e" "property" "sigma_z"} {"%13.5e" "property" "tau_xy"} {"%13.5e" "property" "tau_yz"} {"%13.5e" "property" "tau_zx"} {"%13.5e" "property" "grad_sigma_x"} {"%13.5e" "property" "grad_sigma_y"} {"%13.5e" "property" "grad_sigma_z"} {"%13.5e" "property" "grad_tau_xy"} {"%13.5e" "property" "grad_tau_yz"} {"%13.5e" "property" "grad_tau_zx"}]
 	set format_count [customlib::GetElementsFormats $list_stress1_joint $condition_formats_stress1_joint]
 	#set number_of_elem [GiD_WriteCalculationFile elements -count $format_count]
-	
+
     set number_of_quad \
     [GiD_WriteCalculationFile elements \
         -count \
+		-elements_faces elements \
         -elemtype Quadrilateral \
         $format_count]
 
     set number_of_tri \
     [GiD_WriteCalculationFile elements \
         -count \
+		-elements_faces elements \
         -elemtype Triangle \
         $format_count]
 
     set number_of_elem \
-    [expr {$number_of_quad + $number_of_tri}]	
-	
+    [expr {$number_of_quad + $number_of_tri}]
+
 	customlib::WriteString "Number of joint elements with initial stresses = $number_of_elem"
 	customlib::WriteString " ElementID STRx STRy STRz STRxy STRyz STRzx GRAD_STRx GRAD_STRy GRAD_STRz GRAD_STRxy GRAD_STRyz GRAD_STRzx"
 	customlib::WriteConnectivities $list_stress1_joint $condition_formats_stress1_joint active
@@ -208,18 +210,20 @@ proc Cmas2d::WriteCalculationFile { filename } {
     set number_of_quad \
     [GiD_WriteCalculationFile elements \
         -count \
+		-elements_faces elements \
         -elemtype Quadrilateral \
         $format_count]
 
     set number_of_tri \
     [GiD_WriteCalculationFile elements \
         -count \
+		-elements_faces elements \
         -elemtype Triangle \
         $format_count]
 
     set number_of_elem \
-    [expr {$number_of_quad + $number_of_tri}]
-
+    [expr {$number_of_quad + $number_of_tri}]	
+	
 	customlib::WriteString "Number of joint elements with initial pore pressure = $number_of_elem"
 	customlib::WriteString " ElementID   PO   GRAD_PO"
 	customlib::WriteConnectivities $list_po1_joint $condition_formats_po1_joint active
@@ -261,16 +265,17 @@ proc Cmas2d::WriteCalculationFile { filename } {
     set condition_formats_po2_joint [list {"%1d" "element" "id"} {"%13.5e" "property" "po2"} {"%13.5e" "property" "grad_po2"}]
 	set format_count [customlib::GetElementsFormats $list_po2_joint $condition_formats_po2_joint]
 	#set number_of_elem [GiD_WriteCalculationFile elements -count $format_count]
-
-    set number_of_quad \
+	set number_of_quad \
     [GiD_WriteCalculationFile elements \
         -count \
+		-elements_faces elements \
         -elemtype Quadrilateral \
         $format_count]
 
     set number_of_tri \
     [GiD_WriteCalculationFile elements \
         -count \
+		-elements_faces elements \
         -elemtype Triangle \
         $format_count]
 

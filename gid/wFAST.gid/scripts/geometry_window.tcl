@@ -13,7 +13,7 @@ proc Cmas2d::CreateWindow { } {
     InitWindow $w [= "Welcome to wFAST"] PreExampleCMAS2DWindowGeom "" "" 1
     if { ![winfo exists $w] } return ;# windows disabled || usemorewindows == 0
     ttk::frame $w.top -style ridge.TFrame
-    ttk::label $w.top.title_text -text [= "wFAST ver 1.0.0 Serial#20260808"] -font BigFont
+    ttk::label $w.top.title_text -text [= "wFAST ver 1.0.1 Serial#20261014"] -font BigFont
     ttk::frame $w.information -style ridge.TFrame
     label $w.information.help -text [= "wFAST is 3D finite element analysis model that computes stress and displacement fields for solid and joint elements.\
 	  \Draw the geometry of formation rocks and faults.\
