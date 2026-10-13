@@ -90,7 +90,7 @@
     </condition>  
   
   <!-- Initial stresses for joint elements -->
-    <condition n="Ini_Stress_Joint" pn="Initial Stress for Joints" ov="surface" ovm="" icon="initial" groups_icon="initial" help="Initial stress for joint elements">
+    <condition n="Ini_Stress_Joint" pn="Initial Stress for Joints" ov="surface" ovm="element" ov_element_types="triangle,quadrilateral" icon="initial" groups_icon="initial" help="Initial stress for joint elements">
       <value n="sigma_x" pn="Sigma_x [Pa]" v="0.0" help="Initial stress"/>  
       <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
 	  <value n="sigma_y" pn="Sigma_y [Pa]" v="0.0" help="Initial stress"/>  
@@ -118,7 +118,7 @@
     </condition>
   
     <!-- Initial pore pressure for joint elements -->
-    <condition n="Ini_Porepressure_Joint" pn="Initial Pore Pressure for Joints" ov="surface" ovm="" icon="initial" groups_icon="initial" help="Initial pore pressure for joint elements">
+    <condition n="Ini_Porepressure_Joint" pn="Initial Pore Pressure for Joints" ov="surface" ovm="element" ov_element_types="triangle,quadrilateral" icon="initial" groups_icon="initial" help="Initial pore pressure for joint elements">
       <value n="po1" pn="Po (for joint element) [Pa]" v="0.0" help="Fluid pressure inside the joint."/>  
       <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
 	  <value n="grad_po1" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>  
@@ -178,7 +178,7 @@
     </condition>
   
       <!-- Initial pore pressure for joint elements -->
-    <condition n="Porepressure_Joint" pn="Pore Pressure for Joint" ov="surface" ovm="" icon="loading" groups_icon="loading" help="Pore pressure for joint elements">
+    <condition n="Porepressure_Joint" pn="Pore Pressure for Joint" ov="surface" ovm="element" ov_element_types="triangle,quadrilateral" icon="loading" groups_icon="loading" help="Pore pressure for joint elements">
       <value n="po2" pn="Po (for joint element) [Pa]" v="0.0" help="fluid pressure for joint elements."/>  
       <symbol proc="gid_groups_conds::draw_symbol_image group.png" orientation="global"/>
 	  <value n="grad_po2" pn="Grad_Po [Pa/m]" v="0.0" help="Pore pressure is calculated by Grad_po*Depth+po"/>  
