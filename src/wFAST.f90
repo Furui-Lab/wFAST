@@ -146,7 +146,7 @@ module wFAST
       real(8), allocatable :: displ(:,:)     !< global nodal displacements (ndim,nnode).
       real(8), allocatable :: displ_inc(:,:) !< increment of nodal displacement, solution of equation (ndim,nnode).
 
-      integer, pointer     :: nodfree(:,:)   !< free coords (ndim,nnode).
+      integer, pointer,contiguous :: nodfree(:,:)   !< free coords (ndim,nnode).
       integer, pointer     :: codfree(:)     !< free coords (ndim*nnode).
       real(8), allocatable :: valfix(:,:)    !< fixed value (ndim,nnode).
 
@@ -684,14 +684,14 @@ contains
          ders( 9,1)= 4*ze     ; ders( 9,2)= 0.0      ; ders( 9,3)= 4*xi
          ders(10,1)= 0.0      ; ders(10,2)= 4*ze     ; ders(10,3)= 4*et
       case(8)
-         ders(1,1)=-0.125d0*etm*zem; ders(1,2)=-0.125d0*xim*zem; ders(1,3)=-0.125d0*xim*etm 
-         ders(2,1)=-0.125d0*etm*zep; ders(2,2)=-0.125d0*xim*zep; ders(2,3)= 0.125d0*xim*etm
-         ders(3,1)= 0.125d0*etm*zep; ders(3,2)=-0.125d0*xip*zep; ders(3,3)= 0.125d0*xip*etm   
-         ders(4,1)= 0.125d0*etm*zem; ders(4,2)=-0.125d0*xip*zem; ders(4,3)=-0.125d0*xip*etm
-         ders(5,1)=-0.125d0*etp*zem; ders(5,2)= 0.125d0*xim*zem; ders(5,3)=-0.125d0*xim*etp   
-         ders(6,1)=-0.125d0*etp*zep; ders(6,2)= 0.125d0*xim*zep; ders(6,3)= 0.125d0*xim*etp
-         ders(7,1)= 0.125d0*etp*zep; ders(7,2)= 0.125d0*xip*zep; ders(7,3)= 0.125d0*xip*etp    
-         ders(8,1)= 0.125d0*etp*zem; ders(8,2)= 0.125d0*xip*zem; ders(8,3)=-0.125d0*xip*etp
+         ders(1,1)=-0.125d0*etm*zem; ders(1,2)=-0.125d0*xim*zem; ders(1,3)=-0.125d0*xim*etm
+         ders(2,1)= 0.125d0*etm*zem; ders(2,2)=-0.125d0*xip*zem; ders(2,3)=-0.125d0*xip*etm
+         ders(3,1)= 0.125d0*etp*zem; ders(3,2)= 0.125d0*xip*zem; ders(3,3)=-0.125d0*xip*etp
+         ders(4,1)=-0.125d0*etp*zem; ders(4,2)= 0.125d0*xim*zem; ders(4,3)=-0.125d0*xim*etp
+         ders(5,1)=-0.125d0*etm*zep; ders(5,2)=-0.125d0*xim*zep; ders(5,3)= 0.125d0*xim*etm
+         ders(6,1)= 0.125d0*etm*zep; ders(6,2)=-0.125d0*xip*zep; ders(6,3)= 0.125d0*xip*etm
+         ders(7,1)= 0.125d0*etp*zep; ders(7,2)= 0.125d0*xip*zep; ders(7,3)= 0.125d0*xip*etp
+         ders(8,1)=-0.125d0*etp*zep; ders(8,2)= 0.125d0*xim*zep; ders(8,3)= 0.125d0*xim*etp
       case(20)
          xii= (/-1, 1, 1,-1,-1, 1, 1,-1, 0, 1, 0,-1,-1, 1,1,-1, 0,1,0,-1/)
          eti= (/-1,-1, 1, 1,-1,-1, 1, 1,-1, 0, 1, 0,-1,-1,1, 1,-1,0,1, 0/)
@@ -970,7 +970,8 @@ contains
       real(8), intent(out) :: eig(ndim)
       real(8), intent(in)  :: sig(nst)
 
-      real(8) :: mat(ndim,ndim), work(ndim*3), info
+      real(8) :: mat(ndim,ndim), work(ndim*3)
+      integer :: info
       external dsyev
 
       call tensor(mat,sig)
@@ -1317,15 +1318,21 @@ contains
       read(iunit_gid,*)
       read(iunit_gid,'(46x,i10)') n
       read(iunit_gid,*)
-      if( n>0 ) then
+      
+      !if( n>0 ) then
          allocate( geom%surfj_elem(n), geom%surfj_enode(param%nodb,n), surfj_load(ndim,param%nodb,n) )
+         
          do iel=1, n
-            read(iunit_gid,*) geom%surfj_elem(gidelemnum(iel)), geom%surfj_enode(:,gidelemnum(iel)), surfj_load(:,1,gidelemnum(iel))
-            do i=1, param%nodb
-               surfj_load(:,i,gidelemnum(iel)) = surfj_load(:,1,gidelemnum(iel))
+            read(iunit_gid,*) k, geom%surfj_enode(:,iel), surfj_load(:,1,iel)
+            
+            geom%surfj_elem(iel) = gidelemnum(k)
+            
+            do i=2, param%nodb
+               surfj_load(:,i,iel) = surfj_load(:,1,iel)
             end do
          end do
-      end if
+      
+      !end if
 
       allocate( stresss_ini(nst,param%neles) )
       stresss_ini=0! Default values
